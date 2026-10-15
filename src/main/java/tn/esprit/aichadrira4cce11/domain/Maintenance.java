@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @Builder
 @ToString
 @Entity
+//@FieldDefaults(level = AccessLevel.PRIVATE) fi 3oudh nekteb private kbal kol attribut nekteb hedhi w maghir private kbal kol attributs
 public class Maintenance {
 
     @Id
@@ -24,7 +25,8 @@ public class Maintenance {
 
     private String description;
 
-    @ManyToOne
+    // Plusieurs maintenances peuvent concerner un véhicule
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_vehicule")
     @ToString.Exclude
     private Vehicule vehicule;

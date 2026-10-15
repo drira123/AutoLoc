@@ -3,7 +3,9 @@ package tn.esprit.aichadrira4cce11.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -16,9 +18,7 @@ public class Agence {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idAgence;
-
-    private String nom;
+    private long idAgence;
 
     private String ville;
 
@@ -26,11 +26,15 @@ public class Agence {
 
     private String telephone;
 
-    @OneToMany(mappedBy = "agence")
+    // Une agence peut posséder plusieurs véhicules
+    @Builder.Default
+    @OneToMany(mappedBy = "agence", fetch = FetchType.LAZY)
     @ToString.Exclude
-    private List<Employe> employes;
+    private List<Vehicule> vehicules = new ArrayList<>();
 
-    @OneToMany(mappedBy = "agence")
+    // Une agence peut avoir plusieurs employés
+    @Builder.Default
+    @OneToMany(mappedBy = "agence", fetch = FetchType.LAZY)
     @ToString.Exclude
-    private List<Vehicule> vehicules;
+    private List<Employe> employes = new ArrayList<>();
 }
