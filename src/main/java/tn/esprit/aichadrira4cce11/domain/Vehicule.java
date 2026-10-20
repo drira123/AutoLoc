@@ -1,5 +1,6 @@
 package tn.esprit.aichadrira4cce11.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -40,6 +41,7 @@ public class Vehicule {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_agence")
     @ToString.Exclude
+    @JsonBackReference("agence-vehicules")
     private Agence agence;
 
     // Un véhicule peut avoir plusieurs maintenances
@@ -63,7 +65,7 @@ public class Vehicule {
     @ToString.Exclude
     private Set<Equipement> equipements = new HashSet<>();
 
-    // Un véhicule peut être lié à plusieurs réservations
+    //Une vehicule peut être lié à plusieurs reservations
     @Builder.Default
     @OneToMany(
             mappedBy = "vehicule",
